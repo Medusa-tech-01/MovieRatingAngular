@@ -1,0 +1,14 @@
+<ng-template #t let-fill="fill">
+    <i class="bi-heart-fill">
+        <i *ngIf="fill > 0" class="bi-heart-fill filled" [style.width.%]="fill"></i>
+    </i>
+</ng-template>
+<!-- {{ movie.rating }} -->
+<ngb-rating 
+[(rate)]="rating" 
+[starTemplate]="t" 
+[readonly]="isReadOnly" 
+[max]="5" 
+(rateChange)="onRatingChange($event)"
+
+></ngb-rating>

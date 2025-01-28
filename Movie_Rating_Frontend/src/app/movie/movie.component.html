@@ -1,0 +1,65 @@
+<app-header></app-header>
+<div class="movie-container">
+    <div class="top">
+        <div class="left" *ngIf="movie">
+            <div class="name">{{ movie.name }}</div>
+            <div class="rating">
+                <span class="rating-value">{{ movie.rating }}</span>
+                <app-star-rating [rating]="movie?.rating" [isReadOnly]="true"></app-star-rating>
+            </div>
+            <div class="cover">
+                <img [src]="movie?.cover" alt="{{ movie?.name }}">
+            </div>
+        </div>
+        <div class="right">
+            <div class="title">Rate this movie</div>
+            <div class="rating-form">
+                <div class="form-group">
+                    <label for="uname">Name</label>
+                    <input type="text" name="uname" class="form-control" [(ngModel)]="newReview.author" required >
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <div class="rating">
+                        <app-star-rating [(rating)]="newReview.rating" [isReadOnly]="false" required ></app-star-rating>
+                    </div>
+                    
+                </div>
+                <div class="form-group">
+                    <label for="review">Review</label>
+                    <textarea name="review" rows="3" class="form-control" [(ngModel)]="newReview.review" required ></textarea>
+                </div>
+                <div class="btn-container">
+                    <!-- <button class="btn btn-dark" (click)="submitReview()" [disabled]="!newReview.author || !newReview.review || newReview.rating <= 0">Submit</button> -->
+                    <button class="btn btn-dark" (click)="submitReview()" >Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <h4 class="title">Reviews</h4>
+        <div class="reviews" *ngIf="movie?.reviews?.length > 0; else noReviews">
+            <div class="review" *ngFor="let review of movie?.reviews">
+                <div class="review-details">
+                    <div class="review-left">
+                        <div class="author">{{ review.author }}</div>
+                        <div class="author_dt">{{ review.published_on | date: "dd-MM-YYYY"}}</div>
+                    </div>
+                    <div class="review-right">
+                        <div class="rating">
+                            <app-star-rating [rating]="review.rating" [isReadOnly]="true"></app-star-rating>
+                            <span class="rating-value">{{ review.rating }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-template #noReviews>
+            <p>No reviews yet. Be the first to review this movie!</p>
+            <!-- <div class="reviews"> -->
+                <!-- <div class="no-reviews">No reviews yet</div> -->
+            <!-- </div> -->
+        </ng-template>
+        
+    </div>
+</div>
