@@ -1,9 +1,0 @@
-[build]
-  base = "Movie_Rating_Frontend" # Point to your frontend folder
-  publish = "dist/browser" # The directory where your build output is located
-  command = "npm run build:prod" # The build command for Angular
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
