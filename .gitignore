@@ -1,3 +1,4 @@
 # Ignore node_modules and package-lock.json files in the backend
 Movie_Rating_Backend/node_modules/
 Movie_Rating_Backend/package-lock.json
+Movie_Rating_Backend/.env
