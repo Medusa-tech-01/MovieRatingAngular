@@ -3,7 +3,7 @@
   publish = "dist/browser" # The directory where your build output is located
   command = "npm run build:prod" # The build command for Angular
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+    [[redirects]]
+    from = "/*"
+    to = "/index.html"
+    status = 200
