@@ -23,7 +23,7 @@ app.use('/api/reviews', reviewRoutes);
 app.use(express.static(path.join(__dirname, '../Movie_Rating_Frontend/dist/')));
 // Catch-all route to serve the Angular app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../Movie_Rating_Frontend/dist/index.html'));
+  res.sendFile(path.join(__dirname, '../Movie_Rating_Frontend/dist/browser/index.csr.html'));
 });
 
 // Start the server 
