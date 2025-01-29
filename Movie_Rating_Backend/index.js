@@ -20,10 +20,10 @@ mongoose.connect('mongodb://localhost:27017/movie-reviews')
 app.use('/api/reviews', reviewRoutes);
 
 // Serve the Angular app's static files
-app.use(express.static(path.join(__dirname, 'dist/movie-rating-frontend')));
+app.use(express.static(path.join(__dirname, '../Movie_Rating_Frontend/dist/')));
 // Catch-all route to serve the Angular app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/movie-rating-frontend/index.html'));
+  res.sendFile(path.join(__dirname, '../Movie_Rating_Frontend/dist/index.html'));
 });
 
 // Start the server 
