@@ -6,6 +6,7 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
 import { CommonModule } from '@angular/common';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms'; 
+import { API_CONFIG } from '../config';
 
 @Component({
   selector: 'app-movie',
@@ -29,7 +30,7 @@ export class MovieComponent implements OnInit{
 
 
   fetchMovieDetails(): void {
-    this.http.get(`http://localhost:5000/api/reviews/${this.id}`).subscribe(
+    this.http.get(`${API_CONFIG.BASE_URL}/api/reviews/${this.id}`).subscribe(
       (data: any) => {
         this.movie = data;
       },
@@ -45,7 +46,7 @@ export class MovieComponent implements OnInit{
       return;
     }
     this.http
-      .post(`http://localhost:5000/api/reviews/add/${this.id}`, this.newReview)
+      .post(`${API_CONFIG.BASE_URL}/api/reviews/add/${this.id}`, this.newReview)
       .subscribe(
         (response: any) => {
           alert(response.message);

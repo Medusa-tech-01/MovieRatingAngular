@@ -13,7 +13,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: "*",  // Allow all origins (For testing only. Restrict in production)
+  origin: "https://my-movies-rating.netlify.app",  // Allow all origins (For testing only. Restrict in production)
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type"],
 }));

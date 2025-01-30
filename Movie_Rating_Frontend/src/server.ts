@@ -7,6 +7,8 @@ import {
 import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { API_CONFIG } from '../src/app/config';
+import fetch from 'node-fetch';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -25,6 +27,44 @@ const angularApp = new AngularNodeAppEngine();
  * });
  * ```
  */
+
+// Proxy API requests to the backend
+app.use('/api', async (req, res) => {
+  try {
+    const targetUrl = `${API_CONFIG.BASE_URL}${req.originalUrl}`;
+
+    // Convert headers to the appropriate format
+    const headers: HeadersInit = {};
+    for (const [key, value] of Object.entries(req.headers)) {
+      if (typeof value === 'string') {
+        headers[key] = value;
+      } else if (Array.isArray(value)) {
+        headers[key] = value.join(','); // Combine array headers into a single string
+      }
+    }
+
+    const fetchResponse = await fetch(targetUrl, {
+      method: req.method,
+      headers, // Use the converted headers
+      body: req.method !== 'GET' && req.method !== 'HEAD' ? req.body : undefined,
+    });
+
+    // Pass through headers and status code
+    res.status(fetchResponse.status);
+    fetchResponse.headers.forEach((value, key) => res.setHeader(key, value));
+
+    // Pipe the response body to the client
+    if (fetchResponse.body) {
+      fetchResponse.body.pipe(res);
+    } else {
+      res.end();
+    }
+  } catch (error) {
+    console.error('Error proxying API request:', error);
+    res.status(500).send('Internal server error');
+  }
+});
+
 
 /**
  * Serve static files from /browser
